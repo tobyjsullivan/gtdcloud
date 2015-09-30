@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe Api::V1::AccountsController do
-  before(:each) { request.headers['Accept'] = "application/vnd.gtdcloud.v1" }
-
   describe "GET #show" do
     before(:each) do
       @account = FactoryGirl.create :account
-      get :show, id: @account.id, format: :json
+      get :show, id: @account.id
     end
 
     it "returns the information about a reporter on a hash" do
@@ -22,7 +20,7 @@ describe Api::V1::AccountsController do
     context "when is successfully created" do
       before(:each) do
         @account_attributes = FactoryGirl.attributes_for :account
-        post :create, { account: @account_attributes }, format: :json
+        post :create, { account: @account_attributes }
       end
 
       it "renders the json representation for the account record just created" do
@@ -38,7 +36,7 @@ describe Api::V1::AccountsController do
         #notice I'm not including the email
         @invalid_account_attributes = { password: "12345678",
                                      password_confirmation: "12345678" }
-        post :create, { account: @invalid_account_attributes }, format: :json
+        post :create, { account: @invalid_account_attributes }
       end
 
       it "renders an errors json" do
@@ -61,7 +59,7 @@ describe Api::V1::AccountsController do
       before(:each) do
         @account = FactoryGirl.create :account
         patch :update, { id: @account.id,
-                         account: { email: "newmail@example.com" } }, format: :json
+                         account: { email: "newmail@example.com" } }
       end
 
       it "renders the json representation for the updated account" do
@@ -76,7 +74,7 @@ describe Api::V1::AccountsController do
       before(:each) do
         @account = FactoryGirl.create :account
         patch :update, { id: @account.id,
-                         account: { email: "bademail.com" } }, format: :json
+                         account: { email: "bademail.com" } }
       end
 
       it "renders an errors json" do
