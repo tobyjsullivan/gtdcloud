@@ -10,7 +10,7 @@ describe Api::V1::AccountsController do
     end
 
     it "returns the information about a reporter on a hash" do
-      account_response = JSON.parse(response.body, symbolize_names: true)
+      account_response = json_response
       expect(account_response[:email]).to eql @account.email
     end
 
@@ -26,7 +26,7 @@ describe Api::V1::AccountsController do
       end
 
       it "renders the json representation for the account record just created" do
-        account_response = JSON.parse(response.body, symbolize_names: true)
+        account_response = json_response
         expect(account_response[:email]).to eql @account_attributes[:email]
       end
 
@@ -42,12 +42,12 @@ describe Api::V1::AccountsController do
       end
 
       it "renders an errors json" do
-        account_response = JSON.parse(response.body, symbolize_names: true)
+        account_response = json_response
         expect(account_response).to have_key(:errors)
       end
 
       it "renders the json errors on why the account could not be created" do
-        account_response = JSON.parse(response.body, symbolize_names: true)
+        account_response = json_response
         expect(account_response[:errors][:email]).to include "can't be blank"
       end
 
@@ -65,7 +65,7 @@ describe Api::V1::AccountsController do
       end
 
       it "renders the json representation for the updated account" do
-        account_response = JSON.parse(response.body, symbolize_names: true)
+        account_response = json_response
         expect(account_response[:email]).to eql "newmail@example.com"
       end
 
@@ -80,12 +80,12 @@ describe Api::V1::AccountsController do
       end
 
       it "renders an errors json" do
-        account_response = JSON.parse(response.body, symbolize_names: true)
+        account_response = json_response
         expect(account_response).to have_key(:errors)
       end
 
       it "renders the json errors on whye the account could not be created" do
-        account_response = JSON.parse(response.body, symbolize_names: true)
+        account_response = json_response
         expect(account_response[:errors][:email]).to include "is invalid"
       end
 
